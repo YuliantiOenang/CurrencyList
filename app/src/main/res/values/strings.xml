@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CurrencyList</string>
+    <string name="clear_list">Clear list</string>
+    <string name="add_instrument">Add instrument</string>
+    <string name="to_crypto">To Crypto</string>
+    <string name="to_fiat">To Fiat</string>
+    <string name="show_all">Show all</string>
+</resources>
