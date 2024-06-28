@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.crypto.currencylist.feature.addcurrency.AddCurrencyViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/space_large"
+        tools:context=".feature.addcurrency.AddCurrencyFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/til_id"
+            android:paddingVertical="@dimen/space_large">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/til_name"
+            android:paddingVertical="@dimen/space_large">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSymbol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/til_symbol"
+            android:paddingVertical="@dimen/space_large">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSymbol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/til_code"
+            android:paddingVertical="@dimen/space_large">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</layout>

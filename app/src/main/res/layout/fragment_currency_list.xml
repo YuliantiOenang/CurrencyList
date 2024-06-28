@@ -1,26 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DemoActivity">
+<layout>
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <data>
+
+        <variable
+            name="vm"
+            type="com.crypto.currencylist.feature.currencylist.CurrencyListViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:elevation="0dp">
+        android:layout_height="match_parent"
+        android:padding="@dimen/space_large"
+        tools:context=".feature.currencylist.CurrencyListFragment">
 
-        <com.crypto.currencylist.view.CustomToolbar
-            android:id="@+id/toolbar"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_large"
+            android:src="@drawable/ic_arrow_back"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/etSearch"
+            app:layout_constraintEnd_toStartOf="@+id/etSearch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_hint"
+            app:layout_constraintBottom_toTopOf="@+id/rvCurrencyList"
+            app:layout_constraintEnd_toStartOf="@+id/ivSearch"
+            app:layout_constraintStart_toEndOf="@+id/ivBack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_large"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@+id/etSearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/etSearch"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCurrencyList"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            app:layout_scrollFlags="scroll|snap|enterAlways"
-            app:title="@string/app_name"
-            app:titleSize="@dimen/text_17">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{vm.empty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/etSearch" />
 
-        </com.crypto.currencylist.view.CustomToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNoResults"
+            android:layout_width="@dimen/empty_image_size"
+            android:layout_height="@dimen/empty_image_size"
+            android:src="@drawable/no_results"
+            android:tint="@android:color/darker_gray"
+            android:visibility="@{vm.empty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/tvNoResults"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearch"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNoResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_result"
+            android:visibility="@{vm.empty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/tvRecommendation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivNoResults" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRecommendation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/try_recommendation(vm.recommendation.name)}"
+            android:visibility="@{vm.empty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNoResults" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

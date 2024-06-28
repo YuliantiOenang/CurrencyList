@@ -9,13 +9,20 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lifecycleViewmodelKtx = "x.x.x"
 material = "1.12.0"
 mockitoKotlin = "2.1.0"
+coreKtxVersion = "1.6.1"
+roomRuntime = "2.4.3"
+junitKtx = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 androidx-junit-v113 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "daggerVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -23,6 +30,10 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 mockito-kotlin = { module = "com.nhaarman.mockitokotlin2:mockito-kotlin", version.ref = "mockitoKotlin" }
+mockk = { group = "io.mockk", name = "mockk", version = "1.12.0" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test", version = "1.6.21" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
