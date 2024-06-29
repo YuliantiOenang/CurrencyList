@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.currencylist.databinding.FragmentCurrencyListBinding
 
 class CurrencyListFragment: Fragment() {
@@ -24,5 +25,11 @@ class CurrencyListFragment: Fragment() {
 //            setVariable(BR.vm, viewModel)
         }
         return requireNotNull(_binding).root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding?.rvCurrencyList?.layoutManager = LinearLayoutManager(context)
+        _binding?.rvCurrencyList?.adapter = CurrencyListAdapter()
     }
 }
