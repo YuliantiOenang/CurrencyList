@@ -15,8 +15,8 @@ interface CurrencyInfoDao {
     @Query("SELECT * FROM currencyinfo WHERE code is not NULL")
     fun loadAllFiat(): List<CurrencyInfo?>?
 
-    @Query("SELECT * FROM currencyinfo WHERE name LIKE :name LIMIT 1")
-    fun findByName(name: String?): CurrencyInfo?
+    @Query("SELECT * FROM currencyinfo WHERE name LIKE :name || '%' OR name LIKE '% ' || :name || '%'")
+    fun findByName(name: String?): List<CurrencyInfo>?
 
     @Insert
     fun insertAll(vararg currencyInfos: CurrencyInfo?)

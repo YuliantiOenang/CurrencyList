@@ -70,4 +70,17 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             }
         }
     }
+
+    fun searchName(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val currencies = currencyInfoRepository.searchQuery(query)
+                withContext(Dispatchers.Main) {
+                    currencyList.postValue(currencies?.value?.toMutableList())
+                }
+            } catch (e: Exception) {
+                Log.e("CurrencyListViewModel", "Error fetching currency", e)
+            }
+        }
+    }
 }
