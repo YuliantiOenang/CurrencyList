@@ -2,6 +2,8 @@ package com.crypto.currencylist
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +55,18 @@ class CurrencyListFragment: Fragment() {
             lifecycleOwner = viewLifecycleOwner
 //            setVariable(BR.vm, viewModel)
         }
+        _binding?.etSearch?.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.toString()?.let {
+                    if (it.isNotEmpty()) {
+                        viewModel?.searchName(it)
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+        })
         return requireNotNull(_binding).root
     }
 
@@ -80,7 +94,7 @@ class CurrencyListFragment: Fragment() {
     }
 
     fun addItem() {
-        val newCI = CurrencyInfo(name = "Rupiah", symbol = "IDR", code = "ID")
+        val newCI = CurrencyInfo(name = "Ethereum", symbol = "ETH")
         viewModel?.insert(newCI)
     }
 
