@@ -3,9 +3,15 @@ package com.crypto.currencylist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.crypto.currencylist.data.CurrencyInfo
 import com.crypto.currencylist.databinding.ItemCurrencyBinding
 
-class CurrencyListAdapter: RecyclerView.Adapter<CurrencyListAdapter.CurrencyViewHolder>() {
+class CurrencyListAdapter(): RecyclerView.Adapter<CurrencyListAdapter.CurrencyViewHolder>() {
+    var data: MutableList<CurrencyInfo> = mutableListOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val view = ItemCurrencyBinding.inflate(
@@ -15,18 +21,18 @@ class CurrencyListAdapter: RecyclerView.Adapter<CurrencyListAdapter.CurrencyView
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(data.get(position))
     }
 
     override fun getItemCount(): Int {
-        return 100
+        return data.size
     }
 
     class CurrencyViewHolder(private val binding: ItemCurrencyBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-            binding.tvCurrencyName.text = "Bitcoin"
-            binding.tvCurrencySymbol.text = "BTC"
+        fun bind(currencyInfo: CurrencyInfo) {
+            binding.tvCurrencyName.text = currencyInfo.name
+            binding.tvCurrencySymbol.text = currencyInfo.symbol
         }
     }
 }
