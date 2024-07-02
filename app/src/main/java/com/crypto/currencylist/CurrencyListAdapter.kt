@@ -31,6 +31,7 @@ class CurrencyListAdapter(): RecyclerView.Adapter<CurrencyListAdapter.CurrencyVi
     class CurrencyViewHolder(private val binding: ItemCurrencyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(currencyInfo: CurrencyInfo) {
+            binding.tvInitial.text = currencyInfo.name?.first().toString()
             binding.tvCurrencyName.text = currencyInfo.name
             binding.tvCurrencySymbol.text = currencyInfo.symbol
         }

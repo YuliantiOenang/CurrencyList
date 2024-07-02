@@ -6,4 +6,6 @@
     <dimen name="search_icon_size">20dp</dimen>
     <dimen name="space_large">10dp</dimen>
     <dimen name="empty_image_size">150dp</dimen>
+    <dimen name="initial">25sp</dimen>
+    <dimen name="initial_circle">48dp</dimen>
 </resources>
