@@ -15,7 +15,7 @@ interface CurrencyInfoDao {
     @Query("SELECT * FROM currencyinfo WHERE code is not NULL")
     fun loadAllFiat(): List<CurrencyInfo?>?
 
-    @Query("SELECT * FROM currencyinfo WHERE name LIKE :name || '%' OR name LIKE '% ' || :name || '%'")
+    @Query("SELECT * FROM currencyinfo WHERE (name LIKE :name || '%' OR name LIKE '% ' || :name || '%') OR symbol LIKE :name || '%'")
     fun findByName(name: String?): List<CurrencyInfo>?
 
     @Insert
