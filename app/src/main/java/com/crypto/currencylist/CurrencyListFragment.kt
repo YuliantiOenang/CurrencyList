@@ -1,5 +1,6 @@
 package com.crypto.currencylist
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -7,17 +8,16 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.crypto.currencylist.DI.AppComponent
-import com.crypto.currencylist.DI.CurrencyViewModelFactory
 import com.crypto.currencylist.data.CurrencyInfo
 import com.crypto.currencylist.databinding.FragmentCurrencyListBinding
-import java.util.Currency
 import javax.inject.Inject
+
 
 class CurrencyListFragment: Fragment() {
 
@@ -34,16 +34,6 @@ class CurrencyListFragment: Fragment() {
         userComponent.inject(this)
     }
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-        // Initialize the ViewModel
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,7 +43,39 @@ class CurrencyListFragment: Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency_list, container, false)
         (_binding as? ViewDataBinding)?.apply {
             lifecycleOwner = viewLifecycleOwner
-//            setVariable(BR.vm, viewModel)
+        }
+        _binding?.etSearch?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                _binding?.etSearch?.hint = ""
+                _binding?.ivBack?.visibility = View.VISIBLE
+                _binding?.ivSearch?.setImageResource(R.drawable.ic_close)
+                viewModel?.state = CurrencyListViewModel.State.SEARCHING
+            } else {
+                _binding?.etSearch?.hint = resources.getString(R.string.search_hint)
+                _binding?.ivBack?.visibility = View.GONE
+                _binding?.ivSearch?.setImageResource(R.drawable.ic_search)
+                viewModel?.state = CurrencyListViewModel.State.IDLE
+            }
+        }
+
+        _binding?.ivBack?.setOnClickListener {
+            _binding?.etSearch?.setText("")
+            _binding?.etSearch?.hint = resources.getString(R.string.search_hint)
+            _binding?.ivBack?.visibility = View.GONE
+            _binding?.ivSearch?.setImageResource(R.drawable.ic_search)
+            _binding?.etSearch?.isFocusable = false
+            hideKeyboardFrom(requireContext(), _binding?.etSearch)
+            viewModel?.state = CurrencyListViewModel.State.IDLE
+            viewModel?.getAllCurrencyLists()
+        }
+
+        _binding?.ivSearch?.setOnClickListener {
+            if (viewModel?.state == CurrencyListViewModel.State.SEARCHING) {
+                _binding?.etSearch?.hint = resources.getString(R.string.search_hint)
+                _binding?.etSearch?.setText("")
+            } else {
+                _binding?.etSearch?.requestFocus()
+            }
         }
         _binding?.etSearch?.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -112,5 +134,12 @@ class CurrencyListFragment: Fragment() {
 
     fun showAll() {
         viewModel?.getAllCurrencyLists()
+    }
+
+    private fun hideKeyboardFrom(context: Context, view: View?) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

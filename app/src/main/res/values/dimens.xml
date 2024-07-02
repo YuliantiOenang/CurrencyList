@@ -5,4 +5,5 @@
     <dimen name="text_17">17sp</dimen>
     <dimen name="search_icon_size">20dp</dimen>
     <dimen name="space_large">10dp</dimen>
+    <dimen name="empty_image_size">250dp</dimen>
 </resources>
