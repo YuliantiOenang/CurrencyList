@@ -1,6 +1,9 @@
 package com.crypto.currencylist
 
 import android.util.Log
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
+import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,23 +14,44 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: CurrencyInfoRepository): ViewModel() {
+class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: CurrencyInfoRepository) :
+    ViewModel(),
+    Observable {
     var currencyList: MutableLiveData<MutableList<CurrencyInfo>> = MutableLiveData(mutableListOf())
+    var state = State.IDLE
+        set(value) {
+            field = value
+            callbacks.notifyChange(this, BR.empty)
+        }
+
     init {
         getAllCurrencyLists()
     }
-    fun getAllCurrencyLists(){
+
+    private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
+
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+        callbacks.add(callback)
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+        callbacks.remove(callback)
+    }
+
+    fun getAllCurrencyLists() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val currencies = currencyInfoRepository.getAllCurrencyLists()
                 withContext(Dispatchers.Main) {
                     currencyList.postValue(currencies?.value?.toMutableList())
+                    callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
                 }
             } catch (e: Exception) {
                 Log.e("CurrencyListViewModel", "Error fetching currency", e)
             }
         }
     }
+
     fun getAllCryptoCurrencyLists() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -40,6 +64,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             }
         }
     }
+
     fun getAllFiatCurrencyLists() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -52,11 +77,13 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             }
         }
     }
+
     fun insert(currencyInfo: CurrencyInfo) {
         viewModelScope.launch(Dispatchers.IO) {
             currencyInfoRepository.insert(currencyInfo)
         }
     }
+
     fun deleteAllCurrencylist() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -77,10 +104,21 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
                 val currencies = currencyInfoRepository.searchQuery(query)
                 withContext(Dispatchers.Main) {
                     currencyList.postValue(currencies?.value?.toMutableList())
+                    callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
+
                 }
             } catch (e: Exception) {
                 Log.e("CurrencyListViewModel", "Error fetching currency", e)
             }
         }
+    }
+
+    @Bindable
+    fun getEmpty(): Boolean {
+        return state == State.SEARCHING && currencyList.value?.isEmpty() ?: true
+    }
+
+    enum class State {
+        SEARCHING, IDLE, EMPTY
     }
 }
