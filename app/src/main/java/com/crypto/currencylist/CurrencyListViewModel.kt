@@ -18,6 +18,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
     ViewModel(),
     Observable {
     var currencyList: MutableLiveData<MutableList<CurrencyInfo>> = MutableLiveData(mutableListOf())
+    var firstItem: MutableLiveData<CurrencyInfo> = MutableLiveData()
     var state = State.IDLE
         set(value) {
             field = value
@@ -43,8 +44,10 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             try {
                 val currencies = currencyInfoRepository.getAllCurrencyLists()
                 withContext(Dispatchers.Main) {
+                    firstItem.value = currencies?.value?.first()
                     currencyList.postValue(currencies?.value?.toMutableList())
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
+                    callbacks.notifyChange(this@CurrencyListViewModel, BR.recommendation)
                 }
             } catch (e: Exception) {
                 Log.e("CurrencyListViewModel", "Error fetching currency", e)
@@ -105,6 +108,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
                 withContext(Dispatchers.Main) {
                     currencyList.postValue(currencies?.value?.toMutableList())
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
+                    callbacks.notifyChange(this@CurrencyListViewModel, BR.recommendation)
 
                 }
             } catch (e: Exception) {
@@ -116,6 +120,11 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
     @Bindable
     fun getEmpty(): Boolean {
         return state == State.SEARCHING && currencyList.value?.isEmpty() ?: true
+    }
+
+    @Bindable
+    fun getRecommendation(): CurrencyInfo? {
+        return firstItem.value
     }
 
     enum class State {

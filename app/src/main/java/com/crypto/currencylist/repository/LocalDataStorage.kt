@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService
 class LocalDataStorage(var application: Context): CurrencyInfoRepository {
     private val db = AppDatabase.getDatabase(application)
     private var allCurrencyInfos: MutableLiveData<List<CurrencyInfo>> = MutableLiveData<List<CurrencyInfo>>()
+    private var firstItem: CurrencyInfo? = null
 
     override suspend fun getAllCurrencyLists(): MutableLiveData<List<CurrencyInfo>> {
         allCurrencyInfos.postValue(db?.currencyInfoDao()?.all)
