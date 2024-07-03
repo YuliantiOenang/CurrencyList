@@ -44,8 +44,8 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             try {
                 val currencies = currencyInfoRepository.getAllCurrencyLists()
                 withContext(Dispatchers.Main) {
-                    firstItem.value = currencies?.value?.first()
-                    currencyList.postValue(currencies?.value?.toMutableList())
+                    firstItem.value = currencies?.first()
+                    (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.recommendation)
                 }
@@ -60,7 +60,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             try {
                 val currencies = currencyInfoRepository.getAllCryptoCurrencyLists()
                 withContext(Dispatchers.Main) {
-                    currencyList.postValue(currencies?.value?.toMutableList())
+                    (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                 }
             } catch (e: Exception) {
                 Log.e("CurrencyListViewModel", "Error fetching currency", e)
@@ -73,7 +73,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             try {
                 val currencies = currencyInfoRepository.getAllFiatCurrencyLists()
                 withContext(Dispatchers.Main) {
-                    currencyList.postValue(currencies?.value?.toMutableList())
+                    (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                 }
             } catch (e: Exception) {
                 Log.e("CurrencyListViewModel", "Error fetching currency", e)
@@ -93,7 +93,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
                 currencyInfoRepository.deleteAllCurrencylist()
                 val currencies = currencyInfoRepository.getAllCurrencyLists()
                 withContext(Dispatchers.Main) {
-                    currencyList.postValue(currencies?.value?.toMutableList())
+                    (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                 }
             } catch (e: Exception) {
                 Log.e("CurrencyListViewModel", "Error fetching currency", e)
@@ -106,7 +106,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             try {
                 val currencies = currencyInfoRepository.searchQuery(query)
                 withContext(Dispatchers.Main) {
-                    currencyList.postValue(currencies?.value?.toMutableList())
+                    (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.recommendation)
 

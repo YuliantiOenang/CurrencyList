@@ -9,7 +9,7 @@ import kotlin.concurrent.Volatile
 
 @Database(entities = [CurrencyInfo::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun currencyInfoDao(): CurrencyInfoDao?
+    abstract fun currencyInfoDao(): CurrencyInfoDao
 
     companion object {
         @Volatile
