@@ -2,7 +2,6 @@ package com.crypto.currencylist
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,12 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.currencylist.databinding.FragmentCurrencyListBinding
 import javax.inject.Inject
 
-
-class CurrencyListFragment: Fragment() {
+class CurrencyListFragment : Fragment() {
 
     private var _binding: FragmentCurrencyListBinding? = null
     private var viewModel: CurrencyListViewModel? = null
     private var _adapter: CurrencyListAdapter? = null
+    var hideButton: ToggleVisibilityButton? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -40,7 +39,8 @@ class CurrencyListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this, viewModelFactory)[CurrencyListViewModel::class.java]
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency_list, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_currency_list, container, false)
         (_binding as? ViewDataBinding)?.apply {
             lifecycleOwner = viewLifecycleOwner
             setVariable(BR.vm, viewModel)
@@ -51,12 +51,14 @@ class CurrencyListFragment: Fragment() {
                 _binding?.ivBack?.visibility = View.VISIBLE
                 _binding?.ivSearch?.setImageResource(R.drawable.ic_close)
                 viewModel?.state = CurrencyListViewModel.State.SEARCHING
+                hideButton?.hideButton()
                 showKeyboardFrom(requireContext(), _binding?.etSearch)
             } else {
                 _binding?.etSearch?.hint = resources.getString(R.string.search_hint)
                 _binding?.ivBack?.visibility = View.GONE
                 _binding?.ivSearch?.setImageResource(R.drawable.ic_search)
                 viewModel?.state = CurrencyListViewModel.State.IDLE
+                hideButton?.showButton()
             }
         }
 
@@ -66,6 +68,7 @@ class CurrencyListFragment: Fragment() {
             _binding?.ivSearch?.setImageResource(R.drawable.ic_close)
             viewModel?.state = CurrencyListViewModel.State.SEARCHING
             showKeyboardFrom(requireContext(), _binding?.etSearch)
+            hideButton?.hideButton()
         }
 
         _binding?.ivBack?.setOnClickListener {
@@ -105,6 +108,7 @@ class CurrencyListFragment: Fragment() {
         hideKeyboardFrom(requireContext(), _binding?.etSearch)
         viewModel?.state = CurrencyListViewModel.State.IDLE
         viewModel?.getAllCurrencyLists()
+        hideButton?.showButton()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,8 +118,7 @@ class CurrencyListFragment: Fragment() {
         _binding?.rvCurrencyList?.layoutManager = LinearLayoutManager(context)
         _binding?.rvCurrencyList?.adapter = getAdapter()
         viewModel?.currencyList?.observe(viewLifecycleOwner) {
-            if (it != null)
-            {
+            if (it != null) {
                 getAdapter().data = it.toMutableList()
             }
         }
@@ -123,7 +126,7 @@ class CurrencyListFragment: Fragment() {
 
     }
 
-    private fun getAdapter() : CurrencyListAdapter {
+    private fun getAdapter(): CurrencyListAdapter {
         if (_adapter == null) {
             _adapter = CurrencyListAdapter()
         }
@@ -158,5 +161,10 @@ class CurrencyListFragment: Fragment() {
         if (view != null) {
             imm.showSoftInput(view, 0)
         }
+    }
+
+    interface ToggleVisibilityButton {
+        fun hideButton()
+        fun showButton()
     }
 }

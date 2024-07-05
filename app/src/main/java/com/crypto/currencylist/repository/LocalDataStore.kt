@@ -1,9 +1,9 @@
 package com.crypto.currencylist.repository
 
-import com.crypto.currencylist.data.CurrencyInfo
-import com.crypto.currencylist.data.CurrencyInfoDao
+import com.crypto.currencylist.data.local.CurrencyInfo
+import com.crypto.currencylist.data.local.CurrencyInfoDao
 
-class LocalDataStorage(private val currencyInfoDao: CurrencyInfoDao): CurrencyInfoRepository {
+class LocalDataStore(private val currencyInfoDao: CurrencyInfoDao): CurrencyInfoRepository {
     private var allCurrencyInfos: List<CurrencyInfo> = listOf()
     private var firstItem: CurrencyInfo? = null
 

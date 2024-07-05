@@ -1,9 +1,7 @@
-package com.crypto.currencylist.DI
+package com.crypto.currencylist.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.crypto.currencylist.CurrencyListViewModel
-import com.crypto.currencylist.repository.CurrencyInfoRepository
 import javax.inject.Inject
 import javax.inject.Provider
 

@@ -1,9 +1,9 @@
 package com.crypto.currencylist
 
-import com.crypto.currencylist.data.CurrencyInfo
-import com.crypto.currencylist.data.CurrencyInfoDao
+import com.crypto.currencylist.data.local.CurrencyInfo
+import com.crypto.currencylist.data.local.CurrencyInfoDao
 import com.crypto.currencylist.repository.CurrencyInfoRepository
-import com.crypto.currencylist.repository.LocalDataStorage
+import com.crypto.currencylist.repository.LocalDataStore
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
@@ -22,14 +22,14 @@ class CurrencyRepositoryUnitTest {
     @Before
     fun setup() {
         mockCurrencyInfoDao = mockk<CurrencyInfoDao>()
-        currencyInfoRepository = LocalDataStorage(mockCurrencyInfoDao!!)
+        currencyInfoRepository = LocalDataStore(mockCurrencyInfoDao!!)
     }
 
     @Test
     fun `test getAllCurrencyList returns all currency lists`() = runTest {
         val infos = listOf(
-            CurrencyInfo(1, "US Dollar", "$", "USD"),
-            CurrencyInfo(2, "Etherium", "ETH")
+            CurrencyInfo("USD", "US Dollar", "$", "USD"),
+            CurrencyInfo("ETH", "Etherium", "ETH")
         )
         coEvery { mockCurrencyInfoDao?.all } returns infos
 
@@ -62,7 +62,7 @@ class CurrencyRepositoryUnitTest {
 
     @Test
     fun `test getFiatCurrencyList returns fiat currency list`() = runTest {
-        val infos = listOf(CurrencyInfo(1, "US Dollar", "$", "USD"))
+        val infos = listOf(CurrencyInfo("USD", "US Dollar", "$", "USD"))
         coEvery { mockCurrencyInfoDao?.loadAllFiat() } returns infos
 
         val result = currencyInfoRepository?.getAllFiatCurrencyLists()
@@ -72,7 +72,7 @@ class CurrencyRepositoryUnitTest {
 
     @Test
     fun `test getCryptoCurrencyList returns fiat currency list`() = runTest {
-        val infos = listOf(CurrencyInfo(1, "Etherium", "ETH"))
+        val infos = listOf(CurrencyInfo("ETH", "Etherium", "ETH"))
         coEvery { mockCurrencyInfoDao?.loadAllCrypto() } returns infos
 
         val result = currencyInfoRepository?.getAllCryptoCurrencyLists()
@@ -83,9 +83,10 @@ class CurrencyRepositoryUnitTest {
 
     @Test
     fun `test insert new data will call insert all from dao`() = runTest {
-        coEvery { mockCurrencyInfoDao?.insertAll(CurrencyInfo()) } returns Unit
-        currencyInfoRepository?.insert(CurrencyInfo())
-        verify { mockCurrencyInfoDao?.insertAll(CurrencyInfo()) }
+        val currency = CurrencyInfo("ETH")
+        coEvery { mockCurrencyInfoDao?.insert(currency) } returns 1
+        currencyInfoRepository?.insert(currency)
+        verify { mockCurrencyInfoDao?.insert(currency) }
     }
 
     @Test
@@ -100,7 +101,7 @@ class CurrencyRepositoryUnitTest {
     fun `search query will call find by name from dao`() = runTest {
         coEvery { mockCurrencyInfoDao?.findByName("") } returns listOf(
             CurrencyInfo(
-                1,
+                "USD",
                 "US Dollar",
                 "$",
                 "USD"

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crypto.currencylist.AddCurrencyActivity.companion.ADD_RESULT
-import com.crypto.currencylist.DI.UserComponent
+import com.crypto.currencylist.di.UserComponent
 import com.crypto.currencylist.databinding.ActivityAddCurrencyBinding
 import javax.inject.Inject
 

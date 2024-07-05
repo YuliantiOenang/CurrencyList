@@ -1,4 +1,4 @@
-package com.crypto.currencylist.data
+package com.crypto.currencylist.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

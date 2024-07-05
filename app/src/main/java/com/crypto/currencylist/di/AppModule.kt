@@ -1,8 +1,7 @@
-package com.crypto.currencylist.DI
+package com.crypto.currencylist.di
 
 import android.app.Application
 import android.content.Context
-import com.crypto.currencylist.CurrencyListApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,7 +11,13 @@ class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun context(): Context {
+    fun provideApplication(): Application {
         return application
+    }
+
+    @Singleton
+    @Provides
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
     }
 }

@@ -6,7 +6,7 @@ import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.crypto.currencylist.data.CurrencyInfo
+import com.crypto.currencylist.data.local.CurrencyInfo
 import com.crypto.currencylist.repository.CurrencyInfoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

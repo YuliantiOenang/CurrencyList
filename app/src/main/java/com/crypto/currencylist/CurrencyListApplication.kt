@@ -1,11 +1,11 @@
 package com.crypto.currencylist
 
 import android.app.Application
-import com.crypto.currencylist.DI.AppComponent
-import com.crypto.currencylist.DI.AppModule
-import com.crypto.currencylist.DI.DaggerAppComponent
-import com.crypto.currencylist.DI.DaggerUserComponent
-import com.crypto.currencylist.DI.UserComponent
+import com.crypto.currencylist.di.AppComponent
+import com.crypto.currencylist.di.AppModule
+import com.crypto.currencylist.di.DaggerAppComponent
+import com.crypto.currencylist.di.DaggerUserComponent
+import com.crypto.currencylist.di.UserComponent
 
 
 class CurrencyListApplication: Application() {

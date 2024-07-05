@@ -3,7 +3,7 @@ package com.crypto.currencylist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.crypto.currencylist.data.CurrencyInfo
+import com.crypto.currencylist.data.local.CurrencyInfo
 import com.crypto.currencylist.databinding.ItemCurrencyBinding
 
 class CurrencyListAdapter(): RecyclerView.Adapter<CurrencyListAdapter.CurrencyViewHolder>() {

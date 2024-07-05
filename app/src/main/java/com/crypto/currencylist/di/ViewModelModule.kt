@@ -1,4 +1,4 @@
-package com.crypto.currencylist.DI
+package com.crypto.currencylist.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

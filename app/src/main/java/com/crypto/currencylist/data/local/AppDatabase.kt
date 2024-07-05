@@ -1,4 +1,4 @@
-package com.crypto.currencylist.data
+package com.crypto.currencylist.data.local
 
 import android.content.Context
 import androidx.room.Database

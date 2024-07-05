@@ -1,16 +1,12 @@
-package com.crypto.currencylist.DI
+package com.crypto.currencylist.di
 
-import android.app.Application
 import android.content.Context
-import androidx.room.Room
-import com.crypto.currencylist.CurrencyListApplication
-import com.crypto.currencylist.data.AppDatabase
-import com.crypto.currencylist.data.CurrencyInfoDao
+import com.crypto.currencylist.data.local.AppDatabase
+import com.crypto.currencylist.data.local.CurrencyInfoDao
 import com.crypto.currencylist.repository.CurrencyInfoRepository
-import com.crypto.currencylist.repository.LocalDataStorage
+import com.crypto.currencylist.repository.LocalDataStore
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class UserModule {
@@ -31,6 +27,6 @@ class UserModule {
     @UserScope
     @Provides
     fun provideDbCurrencyInfoRepository(currencyInfoDao: CurrencyInfoDao): CurrencyInfoRepository {
-        return LocalDataStorage(currencyInfoDao)
+        return LocalDataStore(currencyInfoDao)
     }
 }

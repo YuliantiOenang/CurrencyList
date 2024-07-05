@@ -1,4 +1,4 @@
-package com.crypto.currencylist.DI
+package com.crypto.currencylist.di
 
 import com.crypto.currencylist.AddCurrencyActivity
 import com.crypto.currencylist.AddCurrencyFragment

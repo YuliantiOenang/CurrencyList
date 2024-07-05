@@ -1,4 +1,4 @@
-package com.crypto.currencylist.DI
+package com.crypto.currencylist.di
 
 import javax.inject.Scope
 

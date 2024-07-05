@@ -1,6 +1,6 @@
 package com.crypto.currencylist.repository
 
-import com.crypto.currencylist.data.CurrencyInfo
+import com.crypto.currencylist.data.local.CurrencyInfo
 
 interface CurrencyInfoRepository {
     suspend fun getAllCurrencyLists(): List<CurrencyInfo>?
