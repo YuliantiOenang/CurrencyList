@@ -8,4 +8,9 @@
     <string name="search_hint">Search</string>
     <string name="no_result">No Result</string>
     <string name="try_recommendation">Try \"%s\"</string>
+    <string name="til_id">ID</string>
+    <string name="til_name">Name</string>
+    <string name="til_code">Code</string>
+    <string name="til_symbol">Symbol</string>
+    <string name="send">Send</string>
 </resources>

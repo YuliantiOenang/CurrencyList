@@ -2,11 +2,10 @@ package com.crypto.currencylist.DI
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.crypto.currencylist.CurrencyListApplication
+import com.crypto.currencylist.AddCurrencyViewModel
 import com.crypto.currencylist.CurrencyListViewModel
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.multibindings.IntoMap
 
 
@@ -20,4 +19,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CurrencyListViewModel::class)
     abstract fun bindCurrencyViewModel(viewModel: CurrencyListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddCurrencyViewModel::class)
+    abstract fun bindAddInstrumentViewModel(viewModel: AddCurrencyViewModel): ViewModel
 }

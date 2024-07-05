@@ -2,6 +2,7 @@ package com.crypto.currencylist.data
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
@@ -18,8 +19,8 @@ interface CurrencyInfoDao {
     @Query("SELECT * FROM currencyinfo WHERE (name LIKE :name || '%' OR name LIKE '% ' || :name || '%') OR symbol LIKE :name || '%'")
     fun findByName(name: String?): List<CurrencyInfo>?
 
-    @Insert
-    fun insertAll(vararg currencyInfos: CurrencyInfo?)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(currencyInfos: CurrencyInfo): Long
 
     @Query("DELETE FROM currencyinfo")
     fun delete()

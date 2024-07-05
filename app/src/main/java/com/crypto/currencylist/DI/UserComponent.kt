@@ -1,5 +1,7 @@
 package com.crypto.currencylist.DI
 
+import com.crypto.currencylist.AddCurrencyActivity
+import com.crypto.currencylist.AddCurrencyFragment
 import com.crypto.currencylist.CurrencyListFragment
 import com.crypto.currencylist.DemoActivity
 import dagger.Component
@@ -12,4 +14,6 @@ import dagger.Component
 interface UserComponent {
     fun inject(activity: DemoActivity)
     fun inject(fragment: CurrencyListFragment)
+    fun inject(fragment: AddCurrencyActivity)
+    fun inject(fragment: AddCurrencyFragment)
 }

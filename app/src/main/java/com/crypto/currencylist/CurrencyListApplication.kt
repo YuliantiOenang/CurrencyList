@@ -10,7 +10,7 @@ import com.crypto.currencylist.DI.UserComponent
 
 class CurrencyListApplication: Application() {
 
-    val appComponent1: AppComponent by lazy {
+    val appComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .build()
@@ -19,10 +19,6 @@ class CurrencyListApplication: Application() {
     var userComponent: UserComponent =
         DaggerUserComponent
             .builder()
-            .appComponent(appComponent1)
+            .appComponent(appComponent)
             .build()
-
-    fun getAppComponent(): AppComponent? {
-        return appComponent1
-    }
 }

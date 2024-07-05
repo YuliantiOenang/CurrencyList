@@ -1,12 +1,18 @@
 package com.crypto.currencylist
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.crypto.currencylist.AddCurrencyActivity.companion.ADD_RESULT
 import com.crypto.currencylist.DI.UserComponent
 import com.crypto.currencylist.databinding.ActivityDemoBinding
 
 class DemoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDemoBinding
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +29,18 @@ class DemoActivity : AppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                if (data?.getStringExtra(ADD_RESULT) == "OK") {
+                    (fragment as? CurrencyListFragment)?.showAll()
+                }
+            }
+        }
+
         binding.btnAddInstrument.setOnClickListener {
-            (fragment as? CurrencyListFragment)?.addItem()
+            val intent = Intent(this, AddCurrencyActivity::class.java)
+            resultLauncher.launch(intent)
         }
 
         binding.btnToCrypto.setOnClickListener {

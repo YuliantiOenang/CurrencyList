@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CurrencyInfo(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null,
+    @PrimaryKey
+    var id: String,
 
     var name: String? = null,
     var symbol: String? = null,

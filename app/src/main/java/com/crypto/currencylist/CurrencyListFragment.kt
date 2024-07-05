@@ -2,6 +2,7 @@ package com.crypto.currencylist
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +15,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.crypto.currencylist.data.CurrencyInfo
 import com.crypto.currencylist.databinding.FragmentCurrencyListBinding
 import javax.inject.Inject
 
@@ -128,11 +128,6 @@ class CurrencyListFragment: Fragment() {
             _adapter = CurrencyListAdapter()
         }
         return _adapter!!
-    }
-
-    fun addItem() {
-        val newCI = CurrencyInfo(name = "Ethereum", symbol = "ETH")
-        viewModel?.insert(newCI)
     }
 
     fun clearList() {
