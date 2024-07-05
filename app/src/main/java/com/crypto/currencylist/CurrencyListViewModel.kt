@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: CurrencyInfoRepository) :
+class CurrencyListViewModel @Inject constructor(private var currencyInfoRepository: CurrencyInfoRepository) :
     ViewModel(),
     Observable {
     var currencyList: MutableLiveData<MutableList<CurrencyInfo>> = MutableLiveData(mutableListOf())
-    var firstItem: MutableLiveData<CurrencyInfo> = MutableLiveData()
+    private var firstItem: MutableLiveData<CurrencyInfo?> = MutableLiveData()
     var state = State.IDLE
         set(value) {
             field = value
@@ -44,7 +44,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
             try {
                 val currencies = currencyInfoRepository.getAllCurrencyLists()
                 withContext(Dispatchers.Main) {
-                    firstItem.value = currencies?.first()
+                    firstItem.value = currencies?.firstOrNull()
                     (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.empty)
                     callbacks.notifyChange(this@CurrencyListViewModel, BR.recommendation)
@@ -81,13 +81,7 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
         }
     }
 
-    fun insert(currencyInfo: CurrencyInfo) {
-        viewModelScope.launch(Dispatchers.IO) {
-            currencyInfoRepository.insert(currencyInfo)
-        }
-    }
-
-    fun deleteAllCurrencylist() {
+    fun deleteAllCurrencyList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 currencyInfoRepository.deleteAllCurrencylist()
@@ -128,6 +122,6 @@ class CurrencyListViewModel @Inject constructor(var currencyInfoRepository: Curr
     }
 
     enum class State {
-        SEARCHING, IDLE, EMPTY
+        SEARCHING, IDLE
     }
 }

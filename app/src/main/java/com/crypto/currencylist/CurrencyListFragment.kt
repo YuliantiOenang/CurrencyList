@@ -20,7 +20,7 @@ import javax.inject.Inject
 class CurrencyListFragment : Fragment() {
 
     private var _binding: FragmentCurrencyListBinding? = null
-    private var viewModel: CurrencyListViewModel? = null
+    private var _viewModel: CurrencyListViewModel? = null
     private var _adapter: CurrencyListAdapter? = null
     var hideButton: ToggleVisibilityButton? = null
 
@@ -38,26 +38,26 @@ class CurrencyListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this, viewModelFactory)[CurrencyListViewModel::class.java]
+        _viewModel = ViewModelProvider(this, viewModelFactory)[CurrencyListViewModel::class.java]
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_currency_list, container, false)
         (_binding as? ViewDataBinding)?.apply {
             lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.vm, viewModel)
+            setVariable(BR.vm, _viewModel)
         }
         _binding?.etSearch?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 _binding?.etSearch?.hint = ""
                 _binding?.ivBack?.visibility = View.VISIBLE
                 _binding?.ivSearch?.setImageResource(R.drawable.ic_close)
-                viewModel?.state = CurrencyListViewModel.State.SEARCHING
+                _viewModel?.state = CurrencyListViewModel.State.SEARCHING
                 hideButton?.hideButton()
                 showKeyboardFrom(requireContext(), _binding?.etSearch)
             } else {
                 _binding?.etSearch?.hint = resources.getString(R.string.search_hint)
                 _binding?.ivBack?.visibility = View.GONE
                 _binding?.ivSearch?.setImageResource(R.drawable.ic_search)
-                viewModel?.state = CurrencyListViewModel.State.IDLE
+                _viewModel?.state = CurrencyListViewModel.State.IDLE
                 hideButton?.showButton()
             }
         }
@@ -66,7 +66,7 @@ class CurrencyListFragment : Fragment() {
             _binding?.etSearch?.hint = ""
             _binding?.ivBack?.visibility = View.VISIBLE
             _binding?.ivSearch?.setImageResource(R.drawable.ic_close)
-            viewModel?.state = CurrencyListViewModel.State.SEARCHING
+            _viewModel?.state = CurrencyListViewModel.State.SEARCHING
             showKeyboardFrom(requireContext(), _binding?.etSearch)
             hideButton?.hideButton()
         }
@@ -76,7 +76,7 @@ class CurrencyListFragment : Fragment() {
         }
 
         _binding?.ivSearch?.setOnClickListener {
-            if (viewModel?.state == CurrencyListViewModel.State.SEARCHING) {
+            if (_viewModel?.state == CurrencyListViewModel.State.SEARCHING) {
                 backToNormalView()
             } else {
                 _binding?.etSearch?.requestFocus()
@@ -86,9 +86,9 @@ class CurrencyListFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 s?.toString()?.let {
                     if (it.isNotEmpty()) {
-                        viewModel?.searchName(it)
+                        _viewModel?.searchName(it)
                     } else {
-                        viewModel?.getAllCurrencyLists()
+                        _viewModel?.getAllCurrencyLists()
                     }
                 }
             }
@@ -106,24 +106,24 @@ class CurrencyListFragment : Fragment() {
         _binding?.ivSearch?.setImageResource(R.drawable.ic_search)
         _binding?.etSearch?.clearFocus()
         hideKeyboardFrom(requireContext(), _binding?.etSearch)
-        viewModel?.state = CurrencyListViewModel.State.IDLE
-        viewModel?.getAllCurrencyLists()
+        _viewModel?.state = CurrencyListViewModel.State.IDLE
+        _viewModel?.getAllCurrencyLists()
         hideButton?.showButton()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[CurrencyListViewModel::class.java]
+        _viewModel = ViewModelProvider(this, viewModelFactory)[CurrencyListViewModel::class.java]
         _binding?.rvCurrencyList?.layoutManager = LinearLayoutManager(context)
         _binding?.rvCurrencyList?.adapter = getAdapter()
-        viewModel?.currencyList?.observe(viewLifecycleOwner) {
+        _viewModel?.currencyList?.observe(viewLifecycleOwner) {
+            println("last item "+_viewModel?.currencyList?.value?.lastOrNull())
             if (it != null) {
                 getAdapter().data = it.toMutableList()
+                getAdapter().submitList(getAdapter().data)
             }
         }
-
-
     }
 
     private fun getAdapter(): CurrencyListAdapter {
@@ -134,19 +134,19 @@ class CurrencyListFragment : Fragment() {
     }
 
     fun clearList() {
-        viewModel?.deleteAllCurrencylist()
+        _viewModel?.deleteAllCurrencyList()
     }
 
     fun toCrypto() {
-        viewModel?.getAllCryptoCurrencyLists()
+        _viewModel?.getAllCryptoCurrencyLists()
     }
 
     fun toFiat() {
-        viewModel?.getAllFiatCurrencyLists()
+        _viewModel?.getAllFiatCurrencyLists()
     }
 
     fun showAll() {
-        viewModel?.getAllCurrencyLists()
+        _viewModel?.getAllCurrencyLists()
     }
 
     private fun hideKeyboardFrom(context: Context, view: View?) {

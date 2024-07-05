@@ -49,13 +49,23 @@ class AddCurrencyFragment : Fragment() {
     }
 
     fun addData() {
-        viewModel?.addCurrency(
-            CurrencyInfo(
-                id = _binding?.etId?.text.toString(),
-                name = _binding?.etName?.text.toString(),
-                symbol = _binding?.etSymbol?.text.toString(),
-                code = _binding?.etCode?.text.toString()
+        if (_binding?.etCode?.text?.isNotBlank() == true) {
+            viewModel?.addCurrency(
+                CurrencyInfo(
+                    id = _binding?.etId?.text.toString(),
+                    name = _binding?.etName?.text.toString(),
+                    symbol = _binding?.etSymbol?.text.toString(),
+                    code = _binding?.etCode?.text.toString()
+                )
             )
-        )
+        } else {
+            viewModel?.addCurrency(
+                CurrencyInfo(
+                    id = _binding?.etId?.text.toString(),
+                    name = _binding?.etName?.text.toString(),
+                    symbol = _binding?.etSymbol?.text.toString()
+                )
+            )
+        }
     }
 }
