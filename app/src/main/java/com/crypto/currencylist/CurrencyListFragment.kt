@@ -118,7 +118,6 @@ class CurrencyListFragment : Fragment() {
         _binding?.rvCurrencyList?.layoutManager = LinearLayoutManager(context)
         _binding?.rvCurrencyList?.adapter = getAdapter()
         _viewModel?.currencyList?.observe(viewLifecycleOwner) {
-            println("last item "+_viewModel?.currencyList?.value?.lastOrNull())
             if (it != null) {
                 getAdapter().data = it.toMutableList()
                 getAdapter().submitList(getAdapter().data)

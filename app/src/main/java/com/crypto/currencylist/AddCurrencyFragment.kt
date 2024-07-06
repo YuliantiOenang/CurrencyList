@@ -15,18 +15,12 @@ import javax.inject.Inject
 
 class AddCurrencyFragment : Fragment() {
     private var _binding: FragmentAddCurrencyBinding? = null
-    private var viewModel: AddCurrencyViewModel? = null
+    private var _viewModel: AddCurrencyViewModel? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            viewModelFactory
-        )[AddCurrencyViewModel::class.java]
-    }
+    var activityFinisher: ActivityFinisher? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,14 +37,25 @@ class AddCurrencyFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_currency, container, false)
         (_binding as? ViewDataBinding)?.apply {
             lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.vm, viewModel)
+            setVariable(BR.vm, _viewModel)
         }
         return requireNotNull(_binding).root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _viewModel = ViewModelProvider(
+            requireActivity(),
+            viewModelFactory
+        )[AddCurrencyViewModel::class.java]
+        _viewModel?.currencyLD?.observe(viewLifecycleOwner) {
+            activityFinisher?.finishActivity()
+        }
+    }
+
     fun addData() {
         if (_binding?.etCode?.text?.isNotBlank() == true) {
-            viewModel?.addCurrency(
+            _viewModel?.addCurrency(
                 CurrencyInfo(
                     id = _binding?.etId?.text.toString(),
                     name = _binding?.etName?.text.toString(),
@@ -59,7 +64,7 @@ class AddCurrencyFragment : Fragment() {
                 )
             )
         } else {
-            viewModel?.addCurrency(
+            _viewModel?.addCurrency(
                 CurrencyInfo(
                     id = _binding?.etId?.text.toString(),
                     name = _binding?.etName?.text.toString(),
@@ -67,5 +72,9 @@ class AddCurrencyFragment : Fragment() {
                 )
             )
         }
+    }
+
+    interface ActivityFinisher {
+        fun finishActivity()
     }
 }

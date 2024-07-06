@@ -6,21 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.crypto.currencylist.AddCurrencyActivity.companion.ADD_RESULT
 import com.crypto.currencylist.di.UserComponent
 import com.crypto.currencylist.databinding.ActivityAddCurrencyBinding
-import javax.inject.Inject
 
-class AddCurrencyActivity: AppCompatActivity() {
+class AddCurrencyActivity: AppCompatActivity(), AddCurrencyFragment.ActivityFinisher {
     object companion {
         const val ADD_RESULT = "ADD_RESULT"
     }
-    private lateinit var binding: ActivityAddCurrencyBinding
-    private lateinit var fragment: AddCurrencyFragment
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var _binding: ActivityAddCurrencyBinding
+    private lateinit var _fragment: AddCurrencyFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,23 +23,17 @@ class AddCurrencyActivity: AppCompatActivity() {
         if (!inject(userComponent)) {
             userComponent.inject(this)
         }
+        _binding = ActivityAddCurrencyBinding.inflate(layoutInflater)
 
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(AddCurrencyViewModel::class.java)
-        viewModel.currencyLD.observe(this, Observer { data ->
-            val resultIntent = Intent()
-            resultIntent.putExtra(ADD_RESULT, "OK")
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
-        })
-        binding = ActivityAddCurrencyBinding.inflate(layoutInflater)
-
-        fragment = AddCurrencyFragment()
+        _fragment = AddCurrencyFragment().apply {
+            activityFinisher = this@AddCurrencyActivity
+        }
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.containerAddCurrency, fragment)
+        fragmentTransaction.replace(R.id.containerAddCurrency, _fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-        setContentView(binding.root)
+        setContentView(_binding.root)
     }
 
     open fun inject(component: UserComponent): Boolean {
@@ -60,10 +49,17 @@ class AddCurrencyActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_send -> {
-                fragment.addData()
+                _fragment.addData()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun finishActivity() {
+        val resultIntent = Intent()
+        resultIntent.putExtra(ADD_RESULT, "OK")
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
     }
 }

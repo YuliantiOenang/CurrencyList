@@ -4,8 +4,6 @@ import com.crypto.currencylist.data.local.CurrencyInfo
 import com.crypto.currencylist.data.local.CurrencyInfoDao
 
 class LocalDataStore(private val currencyInfoDao: CurrencyInfoDao): CurrencyInfoRepository {
-    private var allCurrencyInfos: List<CurrencyInfo> = listOf()
-    private var firstItem: CurrencyInfo? = null
 
     override suspend fun getAllCurrencyLists(): List<CurrencyInfo>? {
         return currencyInfoDao.all

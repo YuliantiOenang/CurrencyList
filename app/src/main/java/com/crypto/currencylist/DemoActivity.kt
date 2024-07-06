@@ -12,8 +12,8 @@ import com.crypto.currencylist.di.UserComponent
 import com.crypto.currencylist.databinding.ActivityDemoBinding
 
 class DemoActivity : AppCompatActivity(), CurrencyListFragment.ToggleVisibilityButton {
-    private lateinit var binding: ActivityDemoBinding
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var _binding: ActivityDemoBinding
+    private lateinit var _resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class DemoActivity : AppCompatActivity(), CurrencyListFragment.ToggleVisibilityB
         if (!inject(userComponent)) {
             userComponent.inject(this)
         }
-        binding = ActivityDemoBinding.inflate(layoutInflater)
+        _binding = ActivityDemoBinding.inflate(layoutInflater)
 
         val fragment = CurrencyListFragment().apply {
             hideButton = this@DemoActivity
@@ -32,7 +32,7 @@ class DemoActivity : AppCompatActivity(), CurrencyListFragment.ToggleVisibilityB
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
-        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        _resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 if (data?.getStringExtra(ADD_RESULT) == "OK") {
@@ -41,45 +41,43 @@ class DemoActivity : AppCompatActivity(), CurrencyListFragment.ToggleVisibilityB
             }
         }
 
-        binding.btnAddInstrument.setOnClickListener {
+        _binding.btnAddInstrument.setOnClickListener {
             val intent = Intent(this, AddCurrencyActivity::class.java)
-            resultLauncher.launch(intent)
+            _resultLauncher.launch(intent)
         }
 
-        binding.btnToCrypto.setOnClickListener {
+        _binding.btnToCrypto.setOnClickListener {
             (fragment as? CurrencyListFragment)?.toCrypto()
         }
 
-        binding.toFiat.setOnClickListener {
+        _binding.toFiat.setOnClickListener {
             (fragment as? CurrencyListFragment)?.toFiat()
         }
 
-        binding.btnShowAll.setOnClickListener {
+        _binding.btnShowAll.setOnClickListener {
             (fragment as? CurrencyListFragment)?.showAll()
         }
 
-        binding.btnClearList.setOnClickListener {
+        _binding.btnClearList.setOnClickListener {
             (fragment as? CurrencyListFragment)?.clearList()
         }
-        setContentView(binding.root)
-
-
+        setContentView(_binding.root)
     }
 
     override fun showButton() {
-        binding.btnClearList.visibility = View.VISIBLE
-        binding.btnAddInstrument.visibility = View.VISIBLE
-        binding.btnToCrypto.visibility = View.VISIBLE
-        binding.toFiat.visibility = View.VISIBLE
-        binding.btnShowAll.visibility = View.VISIBLE
+        _binding.btnClearList.visibility = View.VISIBLE
+        _binding.btnAddInstrument.visibility = View.VISIBLE
+        _binding.btnToCrypto.visibility = View.VISIBLE
+        _binding.toFiat.visibility = View.VISIBLE
+        _binding.btnShowAll.visibility = View.VISIBLE
     }
 
     override fun hideButton() {
-        binding.btnClearList.visibility = View.GONE
-        binding.btnAddInstrument.visibility = View.GONE
-        binding.btnToCrypto.visibility = View.GONE
-        binding.toFiat.visibility = View.GONE
-        binding.btnShowAll.visibility = View.GONE
+        _binding.btnClearList.visibility = View.GONE
+        _binding.btnAddInstrument.visibility = View.GONE
+        _binding.btnToCrypto.visibility = View.GONE
+        _binding.toFiat.visibility = View.GONE
+        _binding.btnShowAll.visibility = View.GONE
     }
 
     open fun inject(component: UserComponent): Boolean {
