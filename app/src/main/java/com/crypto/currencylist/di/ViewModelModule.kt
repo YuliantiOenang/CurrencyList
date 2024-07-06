@@ -2,8 +2,8 @@ package com.crypto.currencylist.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.crypto.currencylist.AddCurrencyViewModel
-import com.crypto.currencylist.CurrencyListViewModel
+import com.crypto.currencylist.feature.addcurrency.AddCurrencyViewModel
+import com.crypto.currencylist.feature.currencylist.CurrencyListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

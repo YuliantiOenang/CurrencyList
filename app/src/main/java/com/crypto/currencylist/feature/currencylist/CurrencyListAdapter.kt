@@ -1,4 +1,4 @@
-package com.crypto.currencylist
+package com.crypto.currencylist.feature.currencylist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crypto.currencylist.data.local.CurrencyInfo
 import com.crypto.currencylist.databinding.ItemCurrencyBinding
 
-class CurrencyListAdapter: ListAdapter<CurrencyInfo, CurrencyListAdapter.CurrencyViewHolder>(CurrencyInfoDiffCallback) {
+class CurrencyListAdapter: ListAdapter<CurrencyInfo, CurrencyListAdapter.CurrencyViewHolder>(
+    CurrencyInfoDiffCallback
+) {
     var data: MutableList<CurrencyInfo> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {

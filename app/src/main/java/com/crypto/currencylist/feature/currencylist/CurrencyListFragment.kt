@@ -1,4 +1,4 @@
-package com.crypto.currencylist
+package com.crypto.currencylist.feature.currencylist
 
 import android.app.Activity
 import android.content.Context
@@ -14,6 +14,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.crypto.currencylist.BR
+import com.crypto.currencylist.CurrencyListApplication
+import com.crypto.currencylist.R
 import com.crypto.currencylist.databinding.FragmentCurrencyListBinding
 import javax.inject.Inject
 

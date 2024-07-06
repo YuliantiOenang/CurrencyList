@@ -5,7 +5,7 @@
 
         <variable
             name="vm"
-            type="com.crypto.currencylist.AddCurrencyViewModel" />
+            type="com.crypto.currencylist.feature.addcurrency.AddCurrencyViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/space_large"
-        tools:context=".AddCurrencyFragment">
+        tools:context=".feature.addcurrency.AddCurrencyFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilId"

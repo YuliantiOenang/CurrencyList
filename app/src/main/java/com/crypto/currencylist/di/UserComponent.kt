@@ -1,9 +1,9 @@
 package com.crypto.currencylist.di
 
-import com.crypto.currencylist.AddCurrencyActivity
-import com.crypto.currencylist.AddCurrencyFragment
-import com.crypto.currencylist.CurrencyListFragment
-import com.crypto.currencylist.DemoActivity
+import com.crypto.currencylist.feature.addcurrency.AddCurrencyActivity
+import com.crypto.currencylist.feature.addcurrency.AddCurrencyFragment
+import com.crypto.currencylist.feature.currencylist.CurrencyListFragment
+import com.crypto.currencylist.feature.currencylist.DemoActivity
 import dagger.Component
 
 @UserScope

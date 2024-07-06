@@ -1,4 +1,4 @@
-package com.crypto.currencylist
+package com.crypto.currencylist.feature.addcurrency
 
 import android.util.Log
 import androidx.databinding.Observable
@@ -12,18 +12,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddCurrencyViewModel @javax.inject.Inject constructor(var currencyInfoRepository: CurrencyInfoRepository) :
+class AddCurrencyViewModel @javax.inject.Inject constructor(private var currencyInfoRepository: CurrencyInfoRepository) :
     ViewModel(),
     Observable {
-    private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
+    private val _callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
     val currencyLD: MutableLiveData<Long> = MutableLiveData()
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
-        callbacks.add(callback)
+        _callbacks.add(callback)
     }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
-        callbacks.remove(callback)
+        _callbacks.remove(callback)
     }
 
     fun addCurrency(currencyInfo: CurrencyInfo?) {

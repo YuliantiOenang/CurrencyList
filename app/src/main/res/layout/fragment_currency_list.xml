@@ -5,7 +5,7 @@
 
         <variable
             name="vm"
-            type="com.crypto.currencylist.CurrencyListViewModel" />
+            type="com.crypto.currencylist.feature.currencylist.CurrencyListViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/space_large"
-        tools:context=".CurrencyListFragment">
+        tools:context=".feature.currencylist.CurrencyListFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivBack"

@@ -1,4 +1,4 @@
-package com.crypto.currencylist
+package com.crypto.currencylist.feature.currencylist
 
 import android.util.Log
 import androidx.databinding.Bindable
@@ -7,6 +7,7 @@ import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.crypto.currencylist.BR
 import com.crypto.currencylist.data.local.CurrencyInfo
 import com.crypto.currencylist.repository.CurrencyInfoRepository
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +59,7 @@ class CurrencyListViewModel @Inject constructor(private var currencyInfoReposito
     fun getAllCryptoCurrencyLists() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val currencies = currencyInfoRepository.getAllCryptoCurrencyLists()
+                val currencies = currencyInfoRepository.getAllCryptoCurrencyList()
                 withContext(Dispatchers.Main) {
                     (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                 }
@@ -71,7 +72,7 @@ class CurrencyListViewModel @Inject constructor(private var currencyInfoReposito
     fun getAllFiatCurrencyLists() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val currencies = currencyInfoRepository.getAllFiatCurrencyLists()
+                val currencies = currencyInfoRepository.getAllFiatCurrencyList()
                 withContext(Dispatchers.Main) {
                     (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }
                 }
@@ -84,7 +85,7 @@ class CurrencyListViewModel @Inject constructor(private var currencyInfoReposito
     fun deleteAllCurrencyList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                currencyInfoRepository.deleteAllCurrencylist()
+                currencyInfoRepository.deleteAllCurrencyList()
                 val currencies = currencyInfoRepository.getAllCurrencyLists()
                 withContext(Dispatchers.Main) {
                     (currencies as? List<CurrencyInfo>)?.toMutableList()?.let { currencyList.postValue(it) }

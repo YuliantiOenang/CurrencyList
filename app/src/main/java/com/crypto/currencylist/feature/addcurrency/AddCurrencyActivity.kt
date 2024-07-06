@@ -1,4 +1,4 @@
-package com.crypto.currencylist
+package com.crypto.currencylist.feature.addcurrency
 
 import android.app.Activity
 import android.content.Intent
@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.crypto.currencylist.AddCurrencyActivity.companion.ADD_RESULT
+import com.crypto.currencylist.R
+import com.crypto.currencylist.feature.addcurrency.AddCurrencyActivity.companion.ADD_RESULT
 import com.crypto.currencylist.di.UserComponent
 import com.crypto.currencylist.databinding.ActivityAddCurrencyBinding
+import com.crypto.currencylist.CurrencyListApplication
 
 class AddCurrencyActivity: AppCompatActivity(), AddCurrencyFragment.ActivityFinisher {
     object companion {

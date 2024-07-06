@@ -1,4 +1,4 @@
-package com.crypto.currencylist
+package com.crypto.currencylist.feature.addcurrency
 
 import android.content.Context
 import android.os.Bundle
@@ -9,8 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.crypto.currencylist.BR
+import com.crypto.currencylist.R
 import com.crypto.currencylist.data.local.CurrencyInfo
 import com.crypto.currencylist.databinding.FragmentAddCurrencyBinding
+import com.crypto.currencylist.CurrencyListApplication
 import javax.inject.Inject
 
 class AddCurrencyFragment : Fragment() {

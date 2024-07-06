@@ -11,10 +11,10 @@ interface CurrencyInfoDao {
     val all: List<CurrencyInfo>?
 
     @Query("SELECT * FROM currencyinfo WHERE code is NULL")
-    fun loadAllCrypto(): List<CurrencyInfo?>?
+    fun loadAllCrypto(): List<CurrencyInfo>?
 
     @Query("SELECT * FROM currencyinfo WHERE code is not NULL")
-    fun loadAllFiat(): List<CurrencyInfo?>?
+    fun loadAllFiat(): List<CurrencyInfo>?
 
     @Query("SELECT * FROM currencyinfo WHERE (name LIKE :name || '%' OR name LIKE '% ' || :name || '%') OR symbol LIKE :name || '%'")
     fun findByName(name: String?): List<CurrencyInfo>?

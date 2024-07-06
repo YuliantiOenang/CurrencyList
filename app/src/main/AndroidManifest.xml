@@ -16,7 +16,7 @@
 
 
         <activity
-            android:name=".DemoActivity"
+            android:name=".feature.currencylist.DemoActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".AddCurrencyActivity"
+            android:name=".feature.addcurrency.AddCurrencyActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
 

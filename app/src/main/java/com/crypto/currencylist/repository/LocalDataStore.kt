@@ -9,11 +9,11 @@ class LocalDataStore(private val currencyInfoDao: CurrencyInfoDao): CurrencyInfo
         return currencyInfoDao.all
     }
 
-    override suspend fun getAllCryptoCurrencyLists(): List<CurrencyInfo?>? {
+    override suspend fun getAllCryptoCurrencyList(): List<CurrencyInfo>? {
         return currencyInfoDao.loadAllCrypto()
     }
 
-    override suspend fun getAllFiatCurrencyLists(): List<CurrencyInfo?>? {
+    override suspend fun getAllFiatCurrencyList(): List<CurrencyInfo>? {
         return  currencyInfoDao.loadAllFiat()
     }
 
@@ -21,11 +21,11 @@ class LocalDataStore(private val currencyInfoDao: CurrencyInfoDao): CurrencyInfo
         return currencyInfoDao.insert(currencyInfo)
     }
 
-    override suspend fun deleteAllCurrencylist() {
+    override suspend fun deleteAllCurrencyList() {
         currencyInfoDao.delete()
     }
 
-    override suspend fun searchQuery(query: String): List<CurrencyInfo?>? {
+    override suspend fun searchQuery(query: String): List<CurrencyInfo>? {
         return currencyInfoDao.findByName(query)
     }
 }

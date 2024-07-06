@@ -65,7 +65,7 @@ class CurrencyRepositoryUnitTest {
         val infos = listOf(CurrencyInfo("USD", "US Dollar", "$", "USD"))
         coEvery { mockCurrencyInfoDao?.loadAllFiat() } returns infos
 
-        val result = currencyInfoRepository?.getAllFiatCurrencyLists()
+        val result = currencyInfoRepository?.getAllFiatCurrencyList()
 
         assertEquals(infos, result)
     }
@@ -75,7 +75,7 @@ class CurrencyRepositoryUnitTest {
         val infos = listOf(CurrencyInfo("ETH", "Etherium", "ETH"))
         coEvery { mockCurrencyInfoDao?.loadAllCrypto() } returns infos
 
-        val result = currencyInfoRepository?.getAllCryptoCurrencyLists()
+        val result = currencyInfoRepository?.getAllCryptoCurrencyList()
 
         assertEquals(infos, result)
         verify { mockCurrencyInfoDao?.loadAllCrypto() }
@@ -92,7 +92,7 @@ class CurrencyRepositoryUnitTest {
     @Test
     fun `test clear all will call delete from dao`() = runTest {
         coEvery { mockCurrencyInfoDao?.delete() } returns Unit
-        currencyInfoRepository?.deleteAllCurrencylist()
+        currencyInfoRepository?.deleteAllCurrencyList()
 
         verify { mockCurrencyInfoDao?.delete() }
     }
