@@ -20,7 +20,6 @@ class CurrencyListAdapter: ListAdapter<CurrencyInfo, CurrencyListAdapter.Currenc
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        println("yulianti item ${currentList[position].name}")
         holder.bind(currentList[position])
     }
 
