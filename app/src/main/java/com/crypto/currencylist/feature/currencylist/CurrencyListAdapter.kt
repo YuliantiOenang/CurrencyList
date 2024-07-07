@@ -11,7 +11,6 @@ import com.crypto.currencylist.databinding.ItemCurrencyBinding
 class CurrencyListAdapter: ListAdapter<CurrencyInfo, CurrencyListAdapter.CurrencyViewHolder>(
     CurrencyInfoDiffCallback
 ) {
-    var data: MutableList<CurrencyInfo> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val view = ItemCurrencyBinding.inflate(
@@ -21,11 +20,12 @@ class CurrencyListAdapter: ListAdapter<CurrencyInfo, CurrencyListAdapter.Currenc
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        println("yulianti item ${currentList[position].name}")
+        holder.bind(currentList[position])
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return currentList.size
     }
 
     class CurrencyViewHolder(private val binding: ItemCurrencyBinding) :
@@ -43,7 +43,7 @@ class CurrencyListAdapter: ListAdapter<CurrencyInfo, CurrencyListAdapter.Currenc
         }
 
         override fun areContentsTheSame(oldItem: CurrencyInfo, newItem: CurrencyInfo): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.symbol == newItem.symbol && oldItem.code == newItem.code
         }
     }
 }

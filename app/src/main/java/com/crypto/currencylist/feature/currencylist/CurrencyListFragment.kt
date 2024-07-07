@@ -122,8 +122,7 @@ class CurrencyListFragment : Fragment() {
         _binding?.rvCurrencyList?.adapter = getAdapter()
         _viewModel?.currencyList?.observe(viewLifecycleOwner) {
             if (it != null) {
-                getAdapter().data = it.toMutableList()
-                getAdapter().submitList(getAdapter().data)
+                getAdapter().submitList(it)
             }
         }
     }
